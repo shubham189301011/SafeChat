@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:chatapp/Screens/homePage.dart';
+<<<<<<< HEAD
+=======
+
+>>>>>>> a0ca5f9... Chat app hai
 void main() {
   runApp(MyApp());
 }
@@ -8,6 +12,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+<<<<<<< HEAD
+=======
+      debugShowCheckedModeBanner: false,
+>>>>>>> a0ca5f9... Chat app hai
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
