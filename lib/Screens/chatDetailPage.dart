@@ -90,7 +90,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
             itemBuilder: (context, index) {
               return Container(
                 padding:
-                    EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 10),
+                EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 10),
                 child: Align(
                   alignment: (messages[index].messageType == "receiver"
                       ? Alignment.topLeft
