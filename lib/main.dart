@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
   bool _amplifyConfigured = false;
 
   // Instantiate Amplify
-  final _amplifyInstance = Amplify();
+  final _amplifyInstance = Amplify;
 
   // controllers for text input
   final emailController = TextEditingController();
@@ -64,9 +64,9 @@ class _MyAppState extends State<MyApp> {
     // add all of the plugins we are currently using
     // in our case... just one - Auth
     AmplifyAuthCognito authPlugin = AmplifyAuthCognito();
-    amplifyInstance.addPlugin(authPlugins: [authPlugin]);
+    _amplifyInstance.addPlugin(authPlugin);
 
-    await amplifyInstance.configure(amplifyconfig);
+    await _amplifyInstance.configure(amplifyconfig);
     try {
       setState(() {
         _amplifyConfigured = true;

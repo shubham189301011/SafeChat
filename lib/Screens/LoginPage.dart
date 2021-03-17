@@ -2,6 +2,8 @@ import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'homePage.dart';
+import 'package:amplify_core/amplify_core.dart';
+import 'package:chatapp/amplifyconfiguration.dart';
 
 
 final _auth= AmplifyAuthCognito();
