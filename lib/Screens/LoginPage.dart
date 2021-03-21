@@ -6,10 +6,11 @@ import 'package:amplify_core/amplify_core.dart';
 import 'package:chatapp/amplifyconfiguration.dart';
 
 
-final _auth= AmplifyAuthCognito();
+final _auth = AmplifyAuthCognito();
 String email;
 String password;
 const users = const {
+  'abc@gmail.com' : '1234567',
   'dribbble@gmail.com': '12345',
   'hunter@gmail.com': 'hunter',
 };
@@ -29,7 +30,7 @@ class LoginScreen extends StatelessWidget {
         }
         return null;
       });
-    }on AuthError catch(e)
+    }catch(e)
     {
       return e.toString();
     }
