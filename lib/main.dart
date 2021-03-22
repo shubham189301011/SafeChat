@@ -3,7 +3,7 @@ import 'package:amplify_flutter/amplify.dart';
 import 'amplifyconfiguration.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
-
+import 'package:chatapp/Screens/homePage.dart';
 void main() {
   runApp(MaterialApp(
     home: MyApp(),
@@ -97,6 +97,7 @@ class _MyAppState extends State<MyApp> {
       );
       setState(() {
         isSignedIn = res.isSignedIn;
+        print("Sign up: " + (isSignedIn ? "Complete" : "Not Complete"));
       });
     }catch (e) {
       print(e);
@@ -112,13 +113,19 @@ class _MyAppState extends State<MyApp> {
 
 
         child: FlutterLogin(
+            title: 'SafeChat',
             logo: 'assets/icon.png',
             onLogin: _signIn,
             onSignup: _signUp,
             onRecoverPassword: (_) => null,
-            title:'SafeChat'
-        ),
+            onSubmitAnimationCompleted: () {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+      builder: (context) => HomePage(),
+      ));
+      },
+     //   onRecoverPassword: _recoverPassword,
       ),
+    )
     );
   }
 }
