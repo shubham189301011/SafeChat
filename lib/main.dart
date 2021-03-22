@@ -4,6 +4,7 @@ import 'amplifyconfiguration.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:chatapp/Screens/homePage.dart';
+
 void main() {
   runApp(MaterialApp(
     home: MyApp(),
@@ -16,7 +17,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   // gives our app awareness about whether we are succesfully connected to the cloud
   bool _amplifyConfigured = false;
 
@@ -66,8 +66,7 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  Future<String> _signUp(LoginData data) async
-  {
+  Future<String> _signUp(LoginData data) async {
     try {
       Map<String, String> userAttributes = {
         "email": emailController.text,
@@ -75,15 +74,15 @@ class _MyAppState extends State<MyApp> {
       SignUpResult res = await Amplify.Auth.signUp(
           username: data.name,
           password: data.password,
-          options: CognitoSignUpOptions(
-              userAttributes: userAttributes
-          )
-      );
+          options: CognitoSignUpOptions(userAttributes: userAttributes));
       setState(() {
         isSignUpComplete = res.isSignUpComplete;
         print("Sign up: " + (isSignUpComplete ? "Complete" : "Not Complete"));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => HomePage(),
+        ));
       });
-    }catch (e) {
+    } catch (e) {
       print(e);
       return "Register Error: " + e.toString();
     }
@@ -97,9 +96,12 @@ class _MyAppState extends State<MyApp> {
       );
       setState(() {
         isSignedIn = res.isSignedIn;
-        print("Sign up: " + (isSignedIn ? "Complete" : "Not Complete"));
+        print("Sign in: " + (isSignedIn ? "Complete" : "Not Complete"));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => HomePage(),
+        ));
       });
-    }catch (e) {
+    } catch (e) {
       print(e);
       return 'Log In Error: ' + e.toString();
     }
@@ -108,24 +110,20 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-      body: SafeArea(
-
-
-        child: FlutterLogin(
-            title: 'SafeChat',
-            logo: 'assets/icon.png',
-            onLogin: _signIn,
-            onSignup: _signUp,
-            onRecoverPassword: (_) => null,
-            onSubmitAnimationCompleted: () {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-      builder: (context) => HomePage(),
-      ));
-      },
-     //   onRecoverPassword: _recoverPassword,
+        body: SafeArea(
+      child: FlutterLogin(
+        title: 'SafeChat',
+        logo: 'assets/icon.png',
+        onLogin: _signIn,
+        onSignup: _signUp,
+        onRecoverPassword: (_) => null,
+        onSubmitAnimationCompleted: () {
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => HomePage(),
+          ));
+        },
+        //   onRecoverPassword: _recoverPassword,
       ),
-    )
-    );
+    ));
   }
 }
