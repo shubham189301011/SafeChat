@@ -1,10 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:chatapp/Screens/chatPage.dart';
+import 'package:amplify_flutter/amplify.dart';
+import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
+import 'package:chatapp/Screens/homePage.dart';
 
-class HomePage extends StatelessWidget{
+class HomePage extends StatefulWidget{
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        leading: GestureDetector(
+          onTap: () {
+            setState(() {
+              try {
+                Amplify.Auth.signOut();
+              } on AuthException catch (e) {
+                print(e.message);
+              }
+            });
+          },
+          child: Icon(Icons.account_circle),
+        ),
+      ),
       body: ChatPage(),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.red,

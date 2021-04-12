@@ -34,6 +34,8 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
+    // amplify is configured on startup
+    _configureAmplify();
   }
 
   @override
@@ -92,9 +94,15 @@ class _MyAppState extends State<MyApp> {
       setState(() {
         isSignedIn = res.isSignedIn;
         print("Sign in: " + (isSignedIn ? "Complete" : "Not Complete"));
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => HomePage(),
-        ));
+        if(isSignedIn) {
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => HomePage(),
+          ));
+        }
+        else
+          {
+            print("Cannot Login");
+          }
       });
     } catch (e) {
       print(e);
@@ -104,21 +112,22 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: SafeArea(
-      child: FlutterLogin(
-        title: 'SafeChat',
-        logo: 'assets/icon.png',
-        onLogin: _signIn,
-        onSignup: _signUp,
-        onRecoverPassword: (_) => null,
-        onSubmitAnimationCompleted: () {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (context) => HomePage(),
-          ));
-        },
-        //   onRecoverPassword: _recoverPassword,
-      ),
-    ));
+    // return Scaffold(
+    //     body: SafeArea(
+    //   child: FlutterLogin(
+    //     title: 'SafeChat',
+    //     logo: 'assets/icon.png',
+    //     onLogin: _signIn,
+    //     onSignup: _signUp,
+    //     onRecoverPassword: (_) => null,
+    //     onSubmitAnimationCompleted: () {
+    //       Navigator.of(context).pushReplacement(MaterialPageRoute(
+    //         builder: (context) => HomePage(),
+    //       ));
+    //     },
+    //     //   onRecoverPassword: _recoverPassword,
+    //   ),
+    // ));
+    return HomePage();
   }
 }
