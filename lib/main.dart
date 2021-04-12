@@ -34,8 +34,6 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
-    // amplify is configured on startup
-    _configureAmplify();
   }
 
   @override
@@ -78,9 +76,6 @@ class _MyAppState extends State<MyApp> {
       setState(() {
         isSignUpComplete = res.isSignUpComplete;
         print("Sign up: " + (isSignUpComplete ? "Complete" : "Not Complete"));
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => HomePage(),
-        ));
       });
     } catch (e) {
       print(e);
