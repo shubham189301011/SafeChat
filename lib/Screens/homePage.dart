@@ -1,10 +1,13 @@
+import 'package:chatapp/Screens/LoginSignUpScreen.dart';
+import 'package:chatapp/main.dart';
 import 'package:flutter/material.dart';
 import 'package:chatapp/Screens/chatPage.dart';
 import 'package:amplify_flutter/amplify.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:chatapp/Screens/homePage.dart';
 
-class HomePage extends StatefulWidget{
+class HomePage extends StatefulWidget {
+  //static String id = 'homepage';
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -20,12 +23,19 @@ class _HomePageState extends State<HomePage> {
             setState(() {
               try {
                 Amplify.Auth.signOut();
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => LoginSignUp(),
+                ));
+                //Navigator.pushNamed(context, MaterialPageRoute(builder: (context) => MyApp()));
+                // Navigator.popAndPushNamed(context, MaterialPageRoute(
+                //   builder: (context) => LoginSignUp()),
+                // );
               } on AuthException catch (e) {
                 print(e.message);
               }
             });
           },
-          child: Icon(Icons.account_circle),
+          child: Icon(Icons.logout),
         ),
       ),
       body: ChatPage(),
