@@ -1,10 +1,10 @@
 import 'package:chatapp/Screens/LoginSignUpScreen.dart';
-import 'package:chatapp/main.dart';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:chatapp/Screens/chatPage.dart';
 import 'package:amplify_flutter/amplify.dart';
-import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
-import 'package:chatapp/Screens/homePage.dart';
+//import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 
 class HomePage extends StatefulWidget {
   //static String id = 'homepage';
@@ -12,7 +12,30 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
+//final _firestore = Firestore.instance;
+FirebaseUser loggedInUser;
+
 class _HomePageState extends State<HomePage> {
+  final _auth = FirebaseAuth.instance;
+
+  @override
+  void initState() {
+    super.initState();
+
+    getCurrentUser();
+  }
+
+  void getCurrentUser() async {
+    try {
+      final user = await _auth.currentUser();
+      if (user != null) {
+        loggedInUser = user;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

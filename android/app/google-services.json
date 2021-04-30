@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "432066721092",
+    "project_id": "chatapp-ae600",
+    "storage_bucket": "chatapp-ae600.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:432066721092:android:66c9d57c08832197069311",
+        "android_client_info": {
+          "package_name": "com.prathamshubham.chatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "432066721092-qlpo7kpbopb7r2jkmekns8ju5ujr9n0e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtgX4_OY7_PEWFUL-d4UZh5eQz8gkywvs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "432066721092-qlpo7kpbopb7r2jkmekns8ju5ujr9n0e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

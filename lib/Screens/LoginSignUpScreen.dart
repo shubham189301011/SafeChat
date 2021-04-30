@@ -1,5 +1,7 @@
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify.dart';
+import 'package:chatapp/Screens/login_screen.dart';
+import 'package:chatapp/Screens/registration_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 
@@ -31,6 +33,9 @@ class _LoginSignUpState extends State<LoginSignUp> {
 
     // amplify is configured on startup
     _configureAmplify();
+    Amplify.Auth.signOut();
+    // loggedInUser = "qUQHyNnqlZN71cQairtQ5WdO5Zi1" as dynamic;
+    // print(loggedInUser.email);
   }
 
   @override
@@ -74,7 +79,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
         isSignUpComplete = res.isSignUpComplete;
         print("Sign up: " + (isSignUpComplete ? "Complete" : "Not Complete"));
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => HomePage(),
+          builder: (context) => RegistrationScreen(),
         ));
       });
     } catch (e) {
@@ -94,7 +99,7 @@ class _LoginSignUpState extends State<LoginSignUp> {
         print("Sign in: " + (isSignedIn ? "Complete" : "Not Complete"));
         if (isSignedIn) {
           Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (context) => HomePage(),
+            builder: (context) => RegistrationScreen(),
           ));
           //Navigator.popAndPushNamed(context, HomePage.id);
         } else {

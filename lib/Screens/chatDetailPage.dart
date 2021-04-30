@@ -6,17 +6,27 @@ class ChatDetailPage extends StatefulWidget {
   _ChatDetailPageState createState() => _ChatDetailPageState();
 }
 
+//final _firestore = Firestore.instance;
+//FirebaseUser loggedInUser;
+
 class _ChatDetailPageState extends State<ChatDetailPage> {
-  List<ChatMessage> messages = [
-    ChatMessage(messageContent: "Hello, Will", messageType: "receiver"),
-    ChatMessage(messageContent: "How have you been?", messageType: "receiver"),
-    ChatMessage(
-        messageContent: "Hey Kriss, I am doing fine dude. wbu?",
-        messageType: "sender"),
-    ChatMessage(messageContent: "ehhhh, doing OK.", messageType: "receiver"),
-    ChatMessage(
-        messageContent: "Is there any thing wrong?", messageType: "sender"),
-  ];
+  // List<ChatMessage> messages = [
+  //   ChatMessage(messageContent: "Hello, Will", messageType: "receiver"),
+  //   ChatMessage(messageContent: "How have you been?", messageType: "receiver"),
+  //   ChatMessage(
+  //       messageContent: "Hey Kriss, I am doing fine dude. wbu?",
+  //       messageType: "sender"),
+  //   ChatMessage(messageContent: "ehhhh, doing OK.", messageType: "receiver"),
+  //   ChatMessage(
+  //       messageContent: "Is there any thing wrong?", messageType: "sender"),
+  // ];
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  String messageText;
 
   @override
   Widget build(BuildContext context) {
@@ -43,10 +53,10 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                   width: 2,
                 ),
                 CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      "<https://randomuser.me/api/portraits/men/5.jpg>"),
-                  maxRadius: 20,
-                ),
+                    // backgroundImage: NetworkImage(
+                    //     "<https://randomuser.me/api/portraits/men/5.jpg>"),
+                    // maxRadius: 20,
+                    ),
                 SizedBox(
                   width: 12,
                 ),
@@ -82,36 +92,37 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
       ),
       body: Stack(
         children: <Widget>[
-          ListView.builder(
-            itemCount: messages.length,
-            shrinkWrap: true,
-            padding: EdgeInsets.only(top: 10, bottom: 10),
-            physics: NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              return Container(
-                padding:
-                EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 10),
-                child: Align(
-                  alignment: (messages[index].messageType == "receiver"
-                      ? Alignment.topLeft
-                      : Alignment.topRight),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: (messages[index].messageType == "receiver"
-                          ? Colors.grey.shade200
-                          : Colors.blue[200]),
-                    ),
-                    padding: EdgeInsets.all(16),
-                    child: Text(
-                      messages[index].messageContent,
-                      style: TextStyle(fontSize: 15),
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
+          //MessagesStream(),
+          // ListView.builder(
+          //   itemCount: messages.length,
+          //   shrinkWrap: true,
+          //   padding: EdgeInsets.only(top: 10, bottom: 10),
+          //   physics: NeverScrollableScrollPhysics(),
+          //   itemBuilder: (context, index) {
+          //     return Container(
+          //       padding:
+          //           EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 10),
+          //       child: Align(
+          //         alignment: (messages[index].messageType == "receiver"
+          //             ? Alignment.topLeft
+          //             : Alignment.topRight),
+          //         child: Container(
+          //           decoration: BoxDecoration(
+          //             borderRadius: BorderRadius.circular(20),
+          //             color: (messages[index].messageType == "receiver"
+          //                 ? Colors.grey.shade200
+          //                 : Colors.blue[200]),
+          //           ),
+          //           padding: EdgeInsets.all(16),
+          //           child: Text(
+          //             messages[index].messageContent,
+          //             style: TextStyle(fontSize: 15),
+          //           ),
+          //         ),
+          //       ),
+          //     );
+          //   },
+          // ),
           Align(
             alignment: Alignment.bottomLeft,
             child: Container(
@@ -151,16 +162,21 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                   SizedBox(
                     width: 15,
                   ),
-                  FloatingActionButton(
-                    onPressed: () {},
-                    child: Icon(
-                      Icons.send,
-                      color: Colors.white,
-                      size: 18,
-                    ),
-                    backgroundColor: Colors.blue,
-                    elevation: 0,
-                  ),
+                  // FloatingActionButton(
+                  //   onPressed: () {
+                  //     _firestore.collection('messages').add({
+                  //       'text': 'Hii',
+                  //       'sender': 'Email',
+                  //     });
+                  //   },
+                  //   child: Icon(
+                  //     Icons.send,
+                  //     color: Colors.white,
+                  //     size: 18,
+                  //   ),
+                  //   backgroundColor: Colors.blue,
+                  //   elevation: 0,
+                  // ),
                 ],
               ),
             ),
@@ -170,3 +186,100 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
     );
   }
 }
+
+// class MessagesStream extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return StreamBuilder<QuerySnapshot>(
+//       stream: _firestore.collection('messages').snapshots(),
+//       builder: (context, snapshot) {
+//         if (!snapshot.hasData) {
+//           return Center(
+//             child: CircularProgressIndicator(
+//               backgroundColor: Colors.lightBlueAccent,
+//             ),
+//           );
+//         }
+//         final messages = snapshot.data.documents.reversed;
+//         List<MessageBubble> messageBubbles = [];
+//         for (var message in messages) {
+//           final messageText = message.data['text'];
+//           final messageSender = message.data['sender'];
+//
+//           // final currentUser = loggedInUser.email;
+//           //
+//           // var decrypted = encrypter.decrypt(encrypted, iv: iv);
+//
+//           final messageBubble = MessageBubble(
+//             sender: messageSender,
+//             //text: decrypted,
+//             text: messageText,
+//             //isMe: currentUser == messageSender,
+//             isMe: true,
+//           );
+//
+//           messageBubbles.add(messageBubble);
+//         }
+//         return Expanded(
+//           child: ListView(
+//             reverse: true,
+//             padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+//             children: messageBubbles,
+//           ),
+//         );
+//       },
+//     );
+//   }
+// }
+//
+// class MessageBubble extends StatelessWidget {
+//   MessageBubble({this.sender, this.text, this.isMe});
+//
+//   final String sender;
+//   final String text;
+//   final bool isMe;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: EdgeInsets.all(10.0),
+//       child: Column(
+//         crossAxisAlignment:
+//             isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+//         children: <Widget>[
+//           Text(
+//             sender,
+//             style: TextStyle(
+//               fontSize: 12.0,
+//               color: Colors.black54,
+//             ),
+//           ),
+//           Material(
+//             borderRadius: isMe
+//                 ? BorderRadius.only(
+//                     topLeft: Radius.circular(30.0),
+//                     bottomLeft: Radius.circular(30.0),
+//                     bottomRight: Radius.circular(30.0))
+//                 : BorderRadius.only(
+//                     bottomLeft: Radius.circular(30.0),
+//                     bottomRight: Radius.circular(30.0),
+//                     topRight: Radius.circular(30.0),
+//                   ),
+//             elevation: 5.0,
+//             color: isMe ? Colors.lightBlueAccent : Colors.white,
+//             child: Padding(
+//               padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+//               child: Text(
+//                 text,
+//                 style: TextStyle(
+//                   color: isMe ? Colors.white : Colors.black54,
+//                   fontSize: 15.0,
+//                 ),
+//               ),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
