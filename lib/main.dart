@@ -1,4 +1,5 @@
 import 'package:chatapp/Screens/LoginSignUpScreen.dart';
+import 'package:chatapp/Screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:amplify_flutter/amplify.dart';
 import 'amplifyconfiguration.dart';

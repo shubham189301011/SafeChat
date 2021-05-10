@@ -1,5 +1,6 @@
 import 'package:chatapp/Screens/login_screen.dart';
 import 'package:chatapp/constants.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:chatapp/components/rounded_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,6 +18,20 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   String password;
   final _auth = FirebaseAuth.instance;
   bool showSpinner = false;
+
+  String userId;
+  Future getCurrentUser() async {
+    try {
+      final user = await _auth.currentUser();
+      if (user != null) {
+        loggedInUser = user;
+        userId = loggedInUser.uid;
+        return userId;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +96,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           await _auth.createUserWithEmailAndPassword(
                               email: email, password: password);
                       if (newUser != null) {
-                        //Navigator.pushNamed(context, HomePage.id);
+                        final usrI = await getCurrentUser();
+
+                        final CollectionReference postsRef =
+                            Firestore.instance.collection('/$usrI');
+
+                        // String postID = usrI;
+                        // Map<String, dynamic> data = {"Wall": 200000};
+                        // postsRef.document(postID).setData(data);
+
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => HomePage(),
                         ));
