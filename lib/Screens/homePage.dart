@@ -55,7 +55,6 @@ class _HomePageState extends State<HomePage> {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
                   builder: (context) => LoginSignUp(),
                 ));
-
               } on AuthException catch (e) {
                 print(e.message);
               }
