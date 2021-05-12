@@ -6,6 +6,7 @@ import 'amplifyconfiguration.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:chatapp/Screens/homePage.dart';
+import 'package:chatapp/Screens/registration_screen.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -21,6 +22,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return LoginScreen();
+    return LoginSignUp();
   }
 }

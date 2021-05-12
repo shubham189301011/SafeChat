@@ -22,7 +22,25 @@ class ChatPeople extends StatelessWidget {
           child: Container(
             child: Row(
               children: <Widget>[
-                Text('Hello'),
+                Container(
+                  width: 40.0,
+                  height: 40.0,
+                  margin: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.pinkAccent,
+                  ),
+                  child: Center(
+                    child: Text(
+                      '${name[0]}',
+                      style: new TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                          color: Colors.white),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
