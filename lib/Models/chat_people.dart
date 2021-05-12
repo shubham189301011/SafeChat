@@ -20,7 +20,8 @@ class ChatPeople extends StatelessWidget {
             ));
           },
           child: Container(
-            child: Align(
+            child:
+            Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 name,
