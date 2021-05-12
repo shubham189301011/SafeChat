@@ -1,0 +1,39 @@
+type User {
+  id: ID!
+  username: String!
+  conversations(filter: ModelConvoLinkFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelConvoLinkConnection
+  messages(filter: ModelMessageFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelMessageConnection
+  createdAt: String
+  updatedAt: String
+}
+
+type Conversation {
+  id: ID!
+  messages(filter: ModelMessageFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelMessageConnection
+  associated(filter: ModelConvoLinkFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelConvoLinkConnection
+  name: String!
+  members: [String!]!
+  createdAt: String
+  updatedAt: String
+}
+
+type Message {
+  id: ID!
+  author: User
+  authorId: String
+  content: String!
+  conversation: Conversation!
+  messageConversationId: ID!
+  createdAt: String
+  updatedAt: String
+}
+
+type ConvoLink {
+  id: ID!
+  user: User!
+  convoLinkUserId: ID
+  conversation: Conversation!
+  convoLinkConversationId: ID!
+  createdAt: String
+  updatedAt: String
+}
