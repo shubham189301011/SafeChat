@@ -151,6 +151,7 @@ class _HomePageState extends State<HomePage> {
                       List<ChatPeople> peopleTabs = [];
                       for (var user in users) {
                         final userName = user.data['name'];
+                        var tempName = userName;
                         final uid = user.data['uid'];
 
                         final peopleTab = ChatPeople(
