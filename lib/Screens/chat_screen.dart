@@ -7,7 +7,7 @@ import 'package:encrypt/encrypt.dart' as encrypt;
 
 final _firestore = Firestore.instance;
 FirebaseUser loggedInUser;
-String userId;
+//String userId;
 
 // final key = encrypt.Key.fromUtf8('my 32 length key................');
 // final iv = encrypt.IV.fromLength(16);
@@ -37,7 +37,6 @@ class _ChatScreenState extends State<ChatScreen> {
     friendId = widget.friendUid;
     getCurrentUser();
     print(loggedInUser);
-    print(loggedInUser.displayName);
   }
 
   void getCurrentUser() async {
@@ -45,7 +44,7 @@ class _ChatScreenState extends State<ChatScreen> {
       final user = await _auth.currentUser();
       if (user != null) {
         loggedInUser = user;
-        userId = loggedInUser.uid;
+        //userId = loggedInUser.uid;
       }
       print(loggedInUser);
     } catch (e) {
@@ -53,23 +52,23 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
-  void getMessages() async {
-    final messages = await _firestore.collection('messages').getDocuments();
-    for (var message in messages.documents) {
-      print(message.data);
-    }
-  }
+  // void getMessages() async {
+  //   final messages = await _firestore.collection('messages').getDocuments();
+  //   for (var message in messages.documents) {
+  //     print(message.data);
+  //   }
+  // }
 
-  void getProfileName() async {
-    final data = await _firestore.collection('users/$userId').getDocuments();
-    print(data.documents);
-  }
-
-  void messagesStream() async {
-    await for (var snapshot in _firestore.collection('messages').snapshots()) {
-      for (var message in snapshot.documents) print(message.data);
-    }
-  }
+  // void getProfileName() async {
+  //   final data = await _firestore.collection('users/$userId').getDocuments();
+  //   print(data.documents);
+  // }
+  //
+  // void messagesStream() async {
+  //   await for (var snapshot in _firestore.collection('messages').snapshots()) {
+  //     for (var message in snapshot.documents) print(message.data);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {

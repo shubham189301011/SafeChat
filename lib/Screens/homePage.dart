@@ -22,15 +22,12 @@ String userId;
 class _HomePageState extends State<HomePage> {
   final _auth = FirebaseAuth.instance;
 
-  String tempName =null;
-
   @override
   void initState() {
     super.initState();
 
     getCurrentUser();
   }
-
 
   Future getCurrentUser() async {
     try {
@@ -53,7 +50,7 @@ class _HomePageState extends State<HomePage> {
         leading: GestureDetector(
           onTap: () {
             setState(() {
-              try { 
+              try {
                 Amplify.Auth.signOut();
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
                   builder: (context) => LoginSignUp(),
@@ -154,7 +151,6 @@ class _HomePageState extends State<HomePage> {
                       List<ChatPeople> peopleTabs = [];
                       for (var user in users) {
                         final userName = user.data['name'];
-                        tempName=userName;
                         final uid = user.data['uid'];
 
                         final peopleTab = ChatPeople(
@@ -184,17 +180,18 @@ class _HomePageState extends State<HomePage> {
         type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(
-            icon:Icon(Icons.message),
+            icon: Icon(Icons.message),
             title: Text("Chats"),
             backgroundColor: Colors.red,
-            ),
+          ),
           BottomNavigationBarItem(
-            icon:IconButton(
-              icon:Icon(Icons.account_box),
-                onPressed: (){Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => ProfileView(tempName),
-                ));}
-            ),
+            icon: IconButton(
+                icon: Icon(Icons.account_box),
+                onPressed: () {
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => ProfileView(),
+                  ));
+                }),
             backgroundColor: Colors.pink,
             title: Text("Profile"),
           ),

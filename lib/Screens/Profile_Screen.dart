@@ -1,12 +1,57 @@
 import 'package:chatapp/constants.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:chatapp/Screens/homePage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:chatapp/Screens/homePage.dart';
+
 final _auth = FirebaseAuth.instance;
-class ProfileView extends StatelessWidget {
-  String username;
-  ProfileView(this.username);
+String userName;
+
+class ProfileView extends StatefulWidget {
+  @override
+  _ProfileViewState createState() => _ProfileViewState();
+}
+
+class _ProfileViewState extends State<ProfileView> {
+  final _firestore = Firestore.instance;
+
+  FirebaseUser loggedInUser;
+
+  void getCurrentUser() async {
+    try {
+      final user = await _auth.currentUser();
+      if (user != null) {
+        loggedInUser = user;
+        //userId = loggedInUser.uid;
+      }
+      print(loggedInUser);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void getProfileName() async {
+    final users = await _firestore.collection('users').getDocuments();
+    //print(data.documents);
+    getCurrentUser();
+    for (var user in users.documents) {
+      if (user.data['uid'] == loggedInUser.uid) {
+        setState(() {
+          userName = user.data['name'];
+          print(user.data['name']);
+        });
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    getCurrentUser();
+    getProfileName();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,15 +62,10 @@ class ProfileView extends StatelessWidget {
             IconButton(
                 icon: Icon(Icons.close),
                 onPressed: () {
-                  //print(friendId);
+                  //getProfileName();
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: (context) => HomePage(),
                   ));
-                  //print(loggedInUser.uid);
-                  //messagesStream();
-                  //getMessages();
-                  //_auth.signOut();
-                  //Navigator.pop(context);
                 }),
           ],
           title: Text('Profile'),
@@ -33,48 +73,49 @@ class ProfileView extends StatelessWidget {
         ),
         body: Center(
             child: Column(
-              children: <Widget>[
-                SizedBox(
-                  height:  100,
+          children: <Widget>[
+            SizedBox(
+              height: 100,
+            ),
+            Container(
+              width: 150.0,
+              height: 150.0,
+              margin: EdgeInsets.all(50),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.red,
+              ),
+              child: Center(
+                child: Text(
+                  userName[0],
+                  style: new TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 100,
+                      color: Colors.white),
+                  textAlign: TextAlign.center,
                 ),
-                Container(
-                  width: 150.0,
-                  height: 150.0,
-                  margin: EdgeInsets.all(50),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.red,
-                  ),
-                  child: Center(
-                    child: Text(
-                      username[0],
-                      style: new TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize:   100,
-                          color: Colors.white),
-                        textAlign: TextAlign.center,
-                    ),
-                  ),
-                  ),
-                Text("Username:"+username,
-                    style: new TextStyle(
-                        fontWeight: FontWeight.normal,
+              ),
+            ),
+            Text(
+              "Username:" + userName,
+              style: new TextStyle(
+                  fontWeight: FontWeight.normal,
+                  fontSize: 25,
+                  color: Colors.black),
+              textAlign: TextAlign.center,
+            ),
+            new Padding(
+              padding: new EdgeInsets.only(top: 10),
+              child: new Text(
+                'Status: Busy',
+                style: new TextStyle(
+                    fontWeight: FontWeight.normal,
                     fontSize: 25,
                     color: Colors.black),
-          textAlign: TextAlign.center,),
-
-                new Padding(
-                  padding: new EdgeInsets.only(top: 10),
-                  child: new Text(
-                    'Status: Busy',
-                    style: new TextStyle(
-                        fontWeight: FontWeight.normal,
-                        fontSize: 25,
-                        color: Colors.black),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ],
-            )));
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
+        )));
   }
 }
