@@ -37,6 +37,7 @@ class _ChatScreenState extends State<ChatScreen> {
     friendId = widget.friendUid;
     getCurrentUser();
     print(loggedInUser);
+    print(loggedInUser.displayName);
   }
 
   void getCurrentUser() async {
@@ -59,6 +60,11 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
+  void getProfileName() async {
+    final data = await _firestore.collection('users/$userId').getDocuments();
+    print(data.documents);
+  }
+
   void messagesStream() async {
     await for (var snapshot in _firestore.collection('messages').snapshots()) {
       for (var message in snapshot.documents) print(message.data);
@@ -76,6 +82,7 @@ class _ChatScreenState extends State<ChatScreen> {
               onPressed: () {
                 //print(friendId);
                 print(widget.friendUid);
+                // print(loggedInUser.displayName);
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
                   builder: (context) => HomePage(),
                 ));
@@ -125,6 +132,15 @@ class _ChatScreenState extends State<ChatScreen> {
                         'text': messageText,
                         'sender': loggedInUser.email,
                       });
+
+                      _firestore
+                          .collection(
+                              '${widget.friendUid}/${loggedInUser.uid}/messages')
+                          .add({
+                        //'text': encrypted.base64,
+                        'text': messageText,
+                        'sender': loggedInUser.email,
+                      });
                     },
                     child: Text(
                       'Send',
@@ -158,7 +174,7 @@ class MessagesStream extends StatelessWidget {
             );
           }
 
-          final messages = snapshot.data.documents;
+          final messages = snapshot.data.documents; //.reversed
           List<MessageBubble> messageBubbles = [];
           for (var message in messages) {
             final messageText = message.data['text'];
@@ -176,6 +192,7 @@ class MessagesStream extends StatelessWidget {
 
           return Expanded(
             child: ListView(
+              reverse: true,
               padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
               children: messageBubbles,
             ),

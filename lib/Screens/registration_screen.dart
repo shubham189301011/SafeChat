@@ -16,6 +16,7 @@ class RegistrationScreen extends StatefulWidget {
 class _RegistrationScreenState extends State<RegistrationScreen> {
   String email;
   String password;
+  String name;
   final _auth = FirebaseAuth.instance;
   bool showSpinner = false;
 
@@ -56,6 +57,19 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               ),
               SizedBox(
                 height: 48.0,
+              ),
+              TextField(
+                textAlign: TextAlign.center,
+                //keyboardType: TextInputType.emailAddress,
+                onChanged: (value) {
+                  name = value;
+                },
+                decoration: kTextFieldDecoration.copyWith(
+                  hintText: 'Enter  your name',
+                ),
+              ),
+              SizedBox(
+                height: 8.0,
               ),
               TextField(
                 textAlign: TextAlign.center,
@@ -100,6 +114,21 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                         final CollectionReference postsRef =
                             Firestore.instance.collection('/$usrI');
+
+                        String postID = usrI;
+                        Map<String, dynamic> data1 = {"name": name};
+                        postsRef.document(postID).setData(data1, merge: true);
+
+                        Map<String, dynamic> data2 = {"uid": usrI};
+                        postsRef.document(postID).setData(data2, merge: true);
+
+                        final CollectionReference postsRef2 =
+                            Firestore.instance.collection('users');
+
+                        String postID2 = usrI;
+                        //Map<String, dynamic> data3 = {"name": name};
+                        postsRef2.document(postID2).setData(data1, merge: true);
+                        postsRef2.document(postID2).setData(data2, merge: true);
 
                         // String postID = usrI;
                         // Map<String, dynamic> data = {"Wall": 200000};
