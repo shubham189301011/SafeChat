@@ -20,14 +20,18 @@ class ChatPeople extends StatelessWidget {
             ));
           },
           child: Container(
-            child:
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                name,
-                style: TextStyle(fontSize: 20.0),
-                textAlign: TextAlign.left,
-              ),
+            child: Row(
+              children: <Widget>[
+                Text('Hello'),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    name,
+                    style: TextStyle(fontSize: 20.0),
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
