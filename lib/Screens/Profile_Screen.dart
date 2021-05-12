@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:chatapp/Screens/homePage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:chatapp/Screens/homePage.dart';
-
 final _auth = FirebaseAuth.instance;
-
 class ProfileView extends StatelessWidget {
   String username;
   ProfileView(this.username);
@@ -35,49 +33,48 @@ class ProfileView extends StatelessWidget {
         ),
         body: Center(
             child: Column(
-          children: <Widget>[
-            SizedBox(
-              height: 100,
-            ),
-            Container(
-              width: 150.0,
-              height: 150.0,
-              margin: EdgeInsets.all(50),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.red,
-              ),
-              child: Center(
-                child: Text(
-                  username[0],
-                  style: new TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 100,
-                      color: Colors.white),
-                  textAlign: TextAlign.center,
+              children: <Widget>[
+                SizedBox(
+                  height:  100,
                 ),
-              ),
-            ),
-            Text(
-              "Username:" + username,
-              style: new TextStyle(
-                  fontWeight: FontWeight.normal,
-                  fontSize: 25,
-                  color: Colors.black),
-              textAlign: TextAlign.center,
-            ),
-            new Padding(
-              padding: new EdgeInsets.only(top: 10),
-              child: new Text(
-                'Status: Busy',
-                style: new TextStyle(
-                    fontWeight: FontWeight.normal,
+                Container(
+                  width: 150.0,
+                  height: 150.0,
+                  margin: EdgeInsets.all(50),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.red,
+                  ),
+                  child: Center(
+                    child: Text(
+                      username[0],
+                      style: new TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize:   100,
+                          color: Colors.white),
+                        textAlign: TextAlign.center,
+                    ),
+                  ),
+                  ),
+                Text("Username:"+username,
+                    style: new TextStyle(
+                        fontWeight: FontWeight.normal,
                     fontSize: 25,
                     color: Colors.black),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ],
-        )));
+          textAlign: TextAlign.center,),
+
+                new Padding(
+                  padding: new EdgeInsets.only(top: 10),
+                  child: new Text(
+                    'Status: Busy',
+                    style: new TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 25,
+                        color: Colors.black),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            )));
   }
 }

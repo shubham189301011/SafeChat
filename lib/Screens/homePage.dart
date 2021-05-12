@@ -55,10 +55,7 @@ class _HomePageState extends State<HomePage> {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
                   builder: (context) => LoginSignUp(),
                 ));
-                //Navigator.pushNamed(context, MaterialPageRoute(builder: (context) => MyApp()));
-                // Navigator.popAndPushNamed(context, MaterialPageRoute(
-                //   builder: (context) => LoginSignUp()),
-                // );
+
               } on AuthException catch (e) {
                 print(e.message);
               }
@@ -151,7 +148,6 @@ class _HomePageState extends State<HomePage> {
                       List<ChatPeople> peopleTabs = [];
                       for (var user in users) {
                         final userName = user.data['name'];
-                        var tempName = userName;
                         final uid = user.data['uid'];
 
                         final peopleTab = ChatPeople(

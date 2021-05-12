@@ -1,6 +1,5 @@
 import 'package:chatapp/Screens/LoginSignUpScreen.dart';
 import 'package:chatapp/Screens/login_screen.dart';
-import 'package:chatapp/Screens/registration_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:amplify_flutter/amplify.dart';
 import 'amplifyconfiguration.dart';
@@ -22,6 +21,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return RegistrationScreen();
+    return LoginScreen();
   }
 }
