@@ -12,15 +12,15 @@ final _firestore = Firestore.instance;
 FirebaseUser loggedInUser;
 
 void main() {
-  final plainText = 'Hello Pratham';
+  //final plainText = 'Hello Pratham';
   final key = Key.fromUtf8('my 32 length key................');
   final iv = IV.fromLength(16);
 
   final encrypter = Encrypter(AES(key));
 
-  final encrypted = encrypter.encrypt(plainText, iv: iv);
-  final decrypted = encrypter.decrypt(encrypted, iv: iv);
+  //final encrypted = encrypter.encrypt(plainText, iv: iv);
+  //final decrypted = encrypter.decrypt(encrypted, iv: iv);
 
-  print(decrypted);
-  print(encrypted.base64);
+  // print(decrypted);
+  // print(encrypted.base64);
 }
