@@ -32,5 +32,16 @@ const amplifyconfig = ''' {
                 }
             }
         }
+    },
+    "api": {
+        "plugins": {
+            "awsAPIPlugin": {
+                "chatapp": {
+                    "endpointType": "GraphQL",
+                    "region": "us-east-1",
+                    "authorizationType": "API_KEY"
+                }
+            }
+        }
     }
 }''';

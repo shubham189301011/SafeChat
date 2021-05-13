@@ -7,7 +7,7 @@ import 'package:chatapp/Screens/homePage.dart';
 
 final _auth = FirebaseAuth.instance;
 String userName;
-
+String _chosenValue;
 class ProfileView extends StatefulWidget {
   @override
   _ProfileViewState createState() => _ProfileViewState();
@@ -96,8 +96,7 @@ class _ProfileViewState extends State<ProfileView> {
                 ),
               ),
             ),
-            Text(
-              "Username:" + userName,
+            Text(userName,
               style: new TextStyle(
                   fontWeight: FontWeight.normal,
                   fontSize: 25,
@@ -107,7 +106,7 @@ class _ProfileViewState extends State<ProfileView> {
             new Padding(
               padding: new EdgeInsets.only(top: 10),
               child: new Text(
-                'Status: Busy',
+                'Status:',
                 style: new TextStyle(
                     fontWeight: FontWeight.normal,
                     fontSize: 25,
@@ -115,6 +114,48 @@ class _ProfileViewState extends State<ProfileView> {
                 textAlign: TextAlign.center,
               ),
             ),
+          Container(
+            width: 350,
+            height: 60,
+            padding: const EdgeInsets.all(0.0),
+            child: DropdownButton<String>(
+              isExpanded: true,
+              value: _chosenValue,
+              //elevation: 5,
+              style: TextStyle(color: Colors.black,
+              fontSize: 20),
+
+              items: <String>[
+                'Available',
+                'Busy',
+                'At School',
+                'At the movies',
+                'At work',
+                'Battery About To Die',
+                'Cant talk, SafeChat only',
+                'In a meeting',
+                'At the gym',
+                'Sleeping',
+                'Urgent Calls only'
+              ].map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              hint: Text(
+                "Please select a status",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600),
+              ),
+              onChanged: (String value) {
+                setState(() {
+                  _chosenValue = value;
+                });
+              },
+            ),)
           ],
         )));
   }

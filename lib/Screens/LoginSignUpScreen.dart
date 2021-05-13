@@ -4,8 +4,9 @@ import 'package:chatapp/Screens/login_screen.dart';
 import 'package:chatapp/Screens/registration_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
-
+import 'package:provider/provider.dart';
 import '../amplifyconfiguration.dart';
+import 'package:chatapp/theme.dart';
 import 'homePage.dart';
 
 class LoginSignUp extends StatefulWidget {
@@ -115,6 +116,20 @@ class _LoginSignUpState extends State<LoginSignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('SafeChat'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.brightness_6),
+            color: Colors.white,
+            onPressed:(){
+              ThemeProvider themeProvider = Provider.of<ThemeProvider>(context,
+                  listen: false);
+              themeProvider.swapTheme();
+            },
+          )
+        ],
+      ),
         body: SafeArea(
       child: FlutterLogin(
         title: 'SafeChat',
