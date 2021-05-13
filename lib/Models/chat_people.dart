@@ -16,6 +16,7 @@ class ChatPeople extends StatelessWidget {
             Navigator.of(context).pushReplacement(MaterialPageRoute(
               builder: (context) => ChatScreen(
                 friendUid: usrId,
+                friendName: name,
               ),
             ));
           },

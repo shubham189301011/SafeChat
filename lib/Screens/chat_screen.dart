@@ -7,6 +7,12 @@ import 'package:encrypt/encrypt.dart' as encrypt;
 
 final _firestore = Firestore.instance;
 FirebaseUser loggedInUser;
+
+final key = encrypt.Key.fromUtf8('my 32 length key................');
+final iv = encrypt.IV.fromLength(16);
+final encrypter = encrypt.Encrypter(encrypt.AES(key));
+var encrypted;
+
 //String userId;
 
 // final key = encrypt.Key.fromUtf8('my 32 length key................');
@@ -14,11 +20,14 @@ FirebaseUser loggedInUser;
 // final encrypter = encrypt.Encrypter(encrypt.AES(key));
 // var encrypted;
 String friendId;
+String uid;
+String time;
 
 class ChatScreen extends StatefulWidget {
   final friendUid;
+  final friendName;
 
-  ChatScreen({this.friendUid});
+  ChatScreen({this.friendUid, this.friendName});
 
   static const String id = 'chat_screen';
   @override
@@ -43,32 +52,17 @@ class _ChatScreenState extends State<ChatScreen> {
     try {
       final user = await _auth.currentUser();
       if (user != null) {
-        loggedInUser = user;
-        //userId = loggedInUser.uid;
+        setState(() {
+          loggedInUser = user;
+          //userId = loggedInUser.uid;
+          uid = loggedInUser.uid;
+        });
       }
       print(loggedInUser);
     } catch (e) {
       print(e);
     }
   }
-
-  // void getMessages() async {
-  //   final messages = await _firestore.collection('messages').getDocuments();
-  //   for (var message in messages.documents) {
-  //     print(message.data);
-  //   }
-  // }
-
-  // void getProfileName() async {
-  //   final data = await _firestore.collection('users/$userId').getDocuments();
-  //   print(data.documents);
-  // }
-  //
-  // void messagesStream() async {
-  //   await for (var snapshot in _firestore.collection('messages').snapshots()) {
-  //     for (var message in snapshot.documents) print(message.data);
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -79,20 +73,13 @@ class _ChatScreenState extends State<ChatScreen> {
           IconButton(
               icon: Icon(Icons.close),
               onPressed: () {
-                //print(friendId);
                 print(widget.friendUid);
-                // print(loggedInUser.displayName);
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
                   builder: (context) => HomePage(),
                 ));
-                //print(loggedInUser.uid);
-                //messagesStream();
-                //getMessages();
-                //_auth.signOut();
-                //Navigator.pop(context);
               }),
         ],
-        title: Text('⚡️Chat'),
+        title: Text(widget.friendName),
         backgroundColor: Colors.lightBlueAccent,
       ),
       body: SafeArea(
@@ -123,22 +110,25 @@ class _ChatScreenState extends State<ChatScreen> {
 
                       // encrypted = encrypter.encrypt(messageText, iv: iv);
                       // print(encrypted.base64);
+                      encrypted = encrypter.encrypt(messageText, iv: iv);
+                      print(encrypted.base64);
+                      DateTime _now = DateTime.now();
                       _firestore
-                          .collection(
-                              '${loggedInUser.uid}/${widget.friendUid}/messages')
+                          .collection('${uid}/${widget.friendUid}/messages')
                           .add({
-                        //'text': encrypted.base64,
-                        'text': messageText,
+                        'text': encrypted.base64,
+                        //'text': messageText,
                         'sender': loggedInUser.email,
+                        'time': '${_now.hour}:${_now.minute}'
                       });
 
                       _firestore
-                          .collection(
-                              '${widget.friendUid}/${loggedInUser.uid}/messages')
+                          .collection('${widget.friendUid}/${uid}/messages')
                           .add({
-                        //'text': encrypted.base64,
-                        'text': messageText,
+                        'text': encrypted.base64,
+                        //'text': messageText,
                         'sender': loggedInUser.email,
+                        'time': '${_now.hour}:${_now.minute}'
                       });
                     },
                     child: Text(
@@ -161,9 +151,7 @@ class MessagesStream extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
         // ignore: missing_return, missing_return
-        stream: _firestore
-            .collection('${loggedInUser.uid}/$friendId/messages')
-            .snapshots(),
+        stream: _firestore.collection('${uid}/$friendId/messages').snapshots(),
         // ignore: missing_return, missing_return
         builder: (context, snapshot) {
           // ignore: missing_return, missing_return
@@ -173,17 +161,21 @@ class MessagesStream extends StatelessWidget {
             );
           }
 
-          final messages = snapshot.data.documents; //.reversed
+          final messages = snapshot.data.documents.reversed; //.reversed
           List<MessageBubble> messageBubbles = [];
           for (var message in messages) {
             final messageText = message.data['text'];
             final messageSender = message.data['sender'];
+            final time = message.data['time'];
 
             final currentUser = loggedInUser.email;
 
+            var decrypted = encrypter.decrypt(encrypted, iv: iv);
+
             final messageBubble = MessageBubble(
               sender: messageSender,
-              text: messageText,
+              text: decrypted,
+              time: time,
               isMe: currentUser == messageSender,
             );
             messageBubbles.add(messageBubble);
@@ -201,10 +193,11 @@ class MessagesStream extends StatelessWidget {
 }
 
 class MessageBubble extends StatelessWidget {
-  MessageBubble({this.sender, this.text, this.isMe});
+  MessageBubble({this.sender, this.text, this.time, this.isMe});
 
   final String sender;
   final String text;
+  final String time;
   final bool isMe;
 
   @override
@@ -245,60 +238,18 @@ class MessageBubble extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(
+            height: 5.0,
+          ),
+          Text(
+            time,
+            style: TextStyle(
+              fontSize: 10.0,
+              color: Colors.black54,
+            ),
+          ),
         ],
       ),
     );
   }
 }
-
-// class MessageBubble extends StatelessWidget {
-//   MessageBubble({this.sender, this.text, this.isMe});
-//
-//   final String sender;
-//   final String text;
-//   final bool isMe;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: EdgeInsets.all(10.0),
-//       child: Column(
-//         crossAxisAlignment:
-//             isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-//         children: <Widget>[
-//           Text(
-//             sender,
-//             style: TextStyle(
-//               fontSize: 12.0,
-//               color: Colors.black54,
-//             ),
-//           ),
-//           Material(
-//             borderRadius: isMe
-//                 ? BorderRadius.only(
-//                     topLeft: Radius.circular(30.0),
-//                     bottomLeft: Radius.circular(30.0),
-//                     bottomRight: Radius.circular(30.0))
-//                 : BorderRadius.only(
-//                     bottomLeft: Radius.circular(30.0),
-//                     bottomRight: Radius.circular(30.0),
-//                     topRight: Radius.circular(30.0),
-//                   ),
-//             elevation: 5.0,
-//             color: isMe ? Colors.lightBlueAccent : Colors.white,
-//             child: Padding(
-//               padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-//               child: Text(
-//                 text,
-//                 style: TextStyle(
-//                   color: isMe ? Colors.white : Colors.black54,
-//                   fontSize: 15.0,
-//                 ),
-//               ),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
