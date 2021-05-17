@@ -8,17 +8,14 @@ import 'package:encrypt/encrypt.dart' as encrypt;
 final _firestore = Firestore.instance;
 FirebaseUser loggedInUser;
 
-// final key = encrypt.Key.fromUtf8('my 32 length key................');
-// final iv = encrypt.IV.fromLength(16);
-// final encrypter = encrypt.Encrypter(encrypt.AES(key));
-// var encrypted;
+final key = encrypt.Key.fromLength(32);
+final iv = encrypt.IV.fromLength(16);
 
-//String userId;
+final encrypter = encrypt.Encrypter(encrypt.AES(key));
+var encrypted;
+var decrypted;
+var encryptedText;
 
-// final key = encrypt.Key.fromUtf8('my 32 length key................');
-// final iv = encrypt.IV.fromLength(16);
-// final encrypter = encrypt.Encrypter(encrypt.AES(key));
-// var encrypted;
 String friendId;
 String uid;
 String time;
@@ -45,7 +42,7 @@ class _ChatScreenState extends State<ChatScreen> {
     super.initState();
     friendId = widget.friendUid;
     getCurrentUser();
-    print(loggedInUser);
+    //print(loggedInUser);
   }
 
   void getCurrentUser() async {
@@ -106,18 +103,17 @@ class _ChatScreenState extends State<ChatScreen> {
                   FlatButton(
                     onPressed: () {
                       messageTextController.clear();
-                      //final text = messageText;
+                      setState(() {
+                        encrypted = encrypter.encrypt(messageText, iv: iv);
+                        encryptedText = encrypted.base64;
+                      });
 
-                      // encrypted = encrypter.encrypt(messageText, iv: iv);
-                      // print(encrypted.base64);
-                      // encrypted = encrypter.encrypt(messageText, iv: iv);
-                      // print(encrypted.base64);
                       DateTime _now = DateTime.now();
                       _firestore
                           .collection('${uid}/${widget.friendUid}/messages')
                           .add({
-                        //'text': encrypted.base64,
-                        'text': messageText,
+                        'text': encryptedText,
+                        //'text': messageText,
                         'sender': loggedInUser.email,
                         'time': '${_now.hour}:${_now.minute}'
                       });
@@ -125,8 +121,8 @@ class _ChatScreenState extends State<ChatScreen> {
                       _firestore
                           .collection('${widget.friendUid}/${uid}/messages')
                           .add({
-                        //'text': encrypted.base64,
-                        'text': messageText,
+                        'text': encryptedText,
+                        //'text': messageText,
                         'sender': loggedInUser.email,
                         'time': '${_now.hour}:${_now.minute}'
                       });
@@ -164,18 +160,21 @@ class MessagesStream extends StatelessWidget {
           final messages = snapshot.data.documents.reversed; //.reversed
           List<MessageBubble> messageBubbles = [];
           for (var message in messages) {
-            final messageText = message.data['text'];
+            final text = message.data['text'];
+            //final messageText = message.data['text'];
             final messageSender = message.data['sender'];
             final time = message.data['time'];
 
             final currentUser = loggedInUser.email;
 
-            //var decrypted = encrypter.decrypt(encrypted, iv: iv);
+            var source = '$text';
+            decrypted = encrypter.decrypt64(source, iv: iv);
+            print(decrypted);
 
             final messageBubble = MessageBubble(
               sender: messageSender,
-              //text: decrypted,
-              text: messageText,
+              text: decrypted,
+              //text: messageText,
               time: time,
               isMe: currentUser == messageSender,
             );
