@@ -7,6 +7,7 @@ class ThemeProvider extends ChangeNotifier{
   );
   ThemeData dark= ThemeData.dark().copyWith(
       primaryColor: Colors.black,
+
     
   );
   ThemeProvider({bool isDarkMode})
