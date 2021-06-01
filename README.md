@@ -22,6 +22,8 @@ Therefore encryption strength totally lies on the key size and if we double or t
 
 Login Screen-
 ![Screenshot_20210601-194024](https://user-images.githubusercontent.com/43439545/120340643-da591c00-c313-11eb-8c92-66d6f03801fd.jpg)
+![Login Screen](https://user-images.githubusercontent.com/43439545/120346946-7afe0a80-c319-11eb-9c06-23a565fab878.gif)
+
 
 Dark Theme-
 ![Screenshot_20210601-194021](https://user-images.githubusercontent.com/43439545/120340707-e5ac4780-c313-11eb-9746-ccb8335502dd.jpg)
