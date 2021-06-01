@@ -36,6 +36,11 @@ Chat Screen
 ![chat screen](https://user-images.githubusercontent.com/43439545/120358870-a3d7cd00-c324-11eb-9041-3be5c12db36a.jpeg)
 
 
+https://user-images.githubusercontent.com/43439545/120361139-25305f00-c327-11eb-8fdf-4bde26bed065.mp4
+
+
+
+
 Profile Screen
 ![Screenshot_20210601-194052](https://user-images.githubusercontent.com/43439545/120340845-fceb3500-c313-11eb-8d1b-c2ef046018da.jpg)
 ![Conversations and Profile](https://user-images.githubusercontent.com/43439545/120347522-fcee3380-c319-11eb-9491-911de778d256.gif)
