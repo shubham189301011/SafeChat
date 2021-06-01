@@ -33,6 +33,8 @@ Conversations Screen
 
 Profile Screen
 ![Screenshot_20210601-194052](https://user-images.githubusercontent.com/43439545/120340845-fceb3500-c313-11eb-8d1b-c2ef046018da.jpg)
+![Conversations and Profile](https://user-images.githubusercontent.com/43439545/120347522-fcee3380-c319-11eb-9491-911de778d256.gif)
+
 
 Amplify Initialization
 ![Amplify initialization](https://user-images.githubusercontent.com/43439545/120346151-bc41ea80-c318-11eb-9389-1ca14a3325c4.png)
