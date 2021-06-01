@@ -29,6 +29,11 @@ Dark Theme-
 ![Screenshot_20210601-194021](https://user-images.githubusercontent.com/43439545/120340707-e5ac4780-c313-11eb-9746-ccb8335502dd.jpg)
 
 Conversations Screen
+![Covo Screen](https://user-images.githubusercontent.com/43439545/120358367-08465c80-c324-11eb-83d6-abce0e3043e7.jpg)
+
+Chat Screen
+
+![chat screen](https://user-images.githubusercontent.com/43439545/120358870-a3d7cd00-c324-11eb-9041-3be5c12db36a.jpeg)
 
 
 Profile Screen
@@ -45,4 +50,11 @@ Deployed Successfully on AWS Amplify
 AWS Auth Cognito for Authentication
 ![AWS Auth Cognito User Pools (1)](https://user-images.githubusercontent.com/43439545/120346436-fe6b2c00-c318-11eb-80ac-283543e1be7c.png)
 ![AWS Auth Cognito User Pools (2)](https://user-images.githubusercontent.com/43439545/120346452-01661c80-c319-11eb-8e52-9b0123b86bd4.png)
+
+User Profile Information(NoSQL)
+<img width="1440" alt="Users" src="https://user-images.githubusercontent.com/43439545/120359842-c4545700-c325-11eb-8ae1-7c1eab86b9db.png">
+
+
+
+
 
