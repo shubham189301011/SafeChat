@@ -10,15 +10,15 @@ The aim of the project is to propose chat application that provides 2 Way securi
 
 
 Encryption Used-
-RSA-
-
-Rivest-Shamir-Adleman is an asymmetric encryption algorithm that works off the factorization of the product of two large prime numbers. Only a user with knowledge of these two numbers can decode the message successfully. Digital signatures commonly use RSA, but the algorithm slows down when it encrypts large volumes of data.
-
-![image](https://user-images.githubusercontent.com/43439545/120340212-6ae32c80-c313-11eb-8877-4557d907a088.png)
-Idea behind RSA
-
-The idea of RSA is based on the fact that it is difficult to factorize a large integer. The public key consists of two numbers where one number is multiplication of two large prime numbers. And private key is also derived from the same two prime numbers. 
-Therefore encryption strength totally lies on the key size and if we double or triple the key size, the strength of encryption increases exponentially. RSA keys can be typically 1024 or 2048 bits long.
+AES with PKCS7 padding
+Signing-
+SHA256 with RSA
+Usage -
+Symmetric
+2-way encryption is supported, so we can pre-encrypt the values (e.g. an API key or static username/password) prior to compilation — meaning we don’t have those sensitive strings exposed in plain-text in the source code or in the subsequent app-bundle that is installed on end-user devices. At runtime we can access the encrypted values and decrypt them just before making that API call or submitting a sign-in operation. For added obscurity and manageability, we can store the encrypted values outside of the code — either locally in an asset-file or remotely in a database — fetching them at runtime. In that last case it means that we, the developer, can update the values as necessary without requiring an app-update and all the release-related overhead.
+We have used 128 bit key.
+An AES 128-bit key can be expressed as a hexadecimal string with 32 characters. It will require 24 characters in base64.
+So, the messages are stored as 24bit encrypted String in our database and the local storage.
 
 Login Screen-
 ![Screenshot_20210601-194024](https://user-images.githubusercontent.com/43439545/120340643-da591c00-c313-11eb-8c92-66d6f03801fd.jpg)
