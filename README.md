@@ -10,6 +10,8 @@ The aim of the project is to propose chat application that provides 2 Way securi
 
 
 Encryption Used-
+![image](https://user-images.githubusercontent.com/43439545/121967098-6431cc00-cd8d-11eb-9807-756b82cd6d32.png)
+
 AES with PKCS7 padding
 Signing-
 SHA256 with RSA
