@@ -61,6 +61,7 @@ User Profile Information(NoSQL)
 
 Messages Stored are Encrypted using RSA Algorithm
 <img width="1440" alt="Encryption" src="https://user-images.githubusercontent.com/43439545/120361518-8bb57d00-c327-11eb-87c1-b79d81a731d9.png">
+![Encrypted Message](https://user-images.githubusercontent.com/43439545/121940536-d8f40e80-cd6b-11eb-9ca7-0801fa6ef471.png)
 
 
 
